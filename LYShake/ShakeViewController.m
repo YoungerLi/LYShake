@@ -4,7 +4,7 @@
 //
 //  Created by liyang on 17/7/14.
 //  Copyright © 2017年 kosienDGL. All rights reserved.
-//
+//  代码地址：https://github.com/YoungerLi/LYShake
 
 #import "ShakeViewController.h"
 #import "LYMotionManager.h"

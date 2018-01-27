@@ -6,15 +6,14 @@
 //  Copyright © 2017年 kosienDGL. All rights reserved.
 //  代码地址：https://github.com/YoungerLi/LYShake
 
-/**
- 这是一个对`CMMotionManager`进行封装的类，主要实现加速计(摇一摇)
- */
-
 #import <Foundation/Foundation.h>
 #import <CoreMotion/CoreMotion.h>
 
 typedef void (^LYAccelerometerHandler)(CMAcceleration acceleration, NSError *error);
 
+/**
+ 这是一个对`CMMotionManager`进行封装的类，主要实现加速计(摇一摇)
+ */
 @interface LYMotionManager : NSObject
 
 /**

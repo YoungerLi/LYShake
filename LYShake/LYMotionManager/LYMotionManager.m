@@ -21,7 +21,7 @@
     static id manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        manager = [[LYMotionManager alloc] init];
+        manager = [[[self class] alloc] init];
     });
     return manager;
 }

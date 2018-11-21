@@ -16,19 +16,13 @@ typedef void (^LYAccelerometerHandler)(CMAcceleration acceleration, NSError *err
  */
 @interface LYMotionManager : NSObject
 
-/**
- 单例
- */
+/** 单例 */
 + (instancetype)defaultManager;
 
-/**
- 开始更新频率
- */
+/** 开始更新频率 */
 - (void)startAccelerometerUpdatesWithHandler:(LYAccelerometerHandler)handler;
 
-/**
- 停止更新频率
- */
+/** 停止更新频率 */
 - (void)stopAccelerometerUpdates;
 
 @end

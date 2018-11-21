@@ -47,7 +47,7 @@
     [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData * _Nullable accelerometerData, NSError * _Nullable error) {
         //获取加速度
         CMAcceleration acceleration = accelerometerData.acceleration;
-        NSLog(@"加速度 == x:%f, y:%f, z:%f", fabs(acceleration.x), fabs(acceleration.y), fabs(acceleration.z));
+        NSLog(@"加速度 == x:%f, y:%f, z:%f", acceleration.x, acceleration.y, acceleration.z);
         
         //值越大说明摇动的幅度越大
         double num = 1.5f;

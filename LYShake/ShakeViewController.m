@@ -44,7 +44,11 @@
     [self.view addSubview:label];
 }
 
+
+
+
 #pragma mark - 开启摇动
+
 - (void)startAccelerometer
 {
     [[LYMotionManager defaultManager] startAccelerometerUpdatesWithHandler:^(CMAcceleration acceleration, NSError *error) {
@@ -53,7 +57,11 @@
     }];
 }
 
+
+
+
 #pragma mark - UIAlertViewDelegate
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self startAccelerometer];
@@ -63,7 +71,7 @@
 
 
 #pragma mark - NSNotification
-//对应上面的通知中心回调的消息接收
+
 - (void)receiveNotification:(NSNotification *)notification
 {
     if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {

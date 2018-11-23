@@ -21,13 +21,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self startAccelerometer];
+    [self startMotion];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    [[LYMotionManager defaultManager] stopAccelerometerUpdates];
+    [[LYMotionManager defaultManager] stopMotion];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [super viewDidDisappear:animated];
@@ -49,9 +49,9 @@
 
 #pragma mark - 开启摇动
 
-- (void)startAccelerometer
+- (void)startMotion
 {
-    [[LYMotionManager defaultManager] startAccelerometerUpdatesWithHandler:^(CMAcceleration acceleration, NSError *error) {
+    [[LYMotionManager defaultManager] startMotionUpdatesWithHandler:^{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"欢迎使用摇一摇" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }];
@@ -64,7 +64,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self startAccelerometer];
+    [self startMotion];
 }
 
 
@@ -76,10 +76,10 @@
 {
     if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {
         NSLog(@"进入后台");
-        [[LYMotionManager defaultManager] stopAccelerometerUpdates];
+        [[LYMotionManager defaultManager] stopMotion];
     } else {
         NSLog(@"回到前台");
-        [self startAccelerometer];
+        [self startMotion];
     }
 }
 

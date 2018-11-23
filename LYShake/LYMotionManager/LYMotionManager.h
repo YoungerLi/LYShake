@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreMotion/CoreMotion.h>
 
-typedef void (^LYAccelerometerHandler)(CMAcceleration acceleration, NSError *error);
+typedef void (^LYMotionHandler)(void);
 
 /**
  这是一个对`CMMotionManager`进行封装的类，主要实现加速计(摇一摇)
@@ -20,9 +20,9 @@ typedef void (^LYAccelerometerHandler)(CMAcceleration acceleration, NSError *err
 + (instancetype)defaultManager;
 
 /** 开始更新频率 */
-- (void)startAccelerometerUpdatesWithHandler:(LYAccelerometerHandler)handler;
+- (void)startMotionUpdatesWithHandler:(LYMotionHandler)handler;
 
 /** 停止更新频率 */
-- (void)stopAccelerometerUpdates;
+- (void)stopMotion;
 
 @end

@@ -30,43 +30,45 @@
 {
     if (_motionManager == nil) {
         _motionManager = [[CMMotionManager alloc] init];
-        _motionManager.accelerometerUpdateInterval = 0.1;   //加速计更新频率，以秒为单位
+        _motionManager.deviceMotionUpdateInterval = 0.1;   //加速计更新频率，以秒为单位
     }
     return _motionManager;
 }
 
 
 #pragma mark - 开始更新频率
-- (void)startAccelerometerUpdatesWithHandler:(LYAccelerometerHandler)handler
+- (void)startMotionUpdatesWithHandler:(LYMotionHandler)handler
 {
-    if (![self.motionManager isAccelerometerAvailable]) {
-        //如果加速计不可用
-        NSLog(@"Accelerometer is not Available");
-        return;
-    }
-    [self.motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData * _Nullable accelerometerData, NSError * _Nullable error) {
-        //获取加速度
-        CMAcceleration acceleration = accelerometerData.acceleration;
-        NSLog(@"加速度 == x:%f, y:%f, z:%f", acceleration.x, acceleration.y, acceleration.z);
+    if (![self.motionManager isDeviceMotionActive] && [self.motionManager isDeviceMotionAvailable]) {
         
-        //值越大说明摇动的幅度越大
-        double num = 1.5f;
-        if (fabs(acceleration.x) > num || fabs(acceleration.y) > num ||fabs(acceleration.z) > num) {
-            //停止更新
-            [self stopAccelerometerUpdates];
+        [self.motionManager startDeviceMotionUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                handler(acceleration, error);
-            });
-        }
-    }];
+            //该属性返回地球重力对该设备在X、Y、Z轴上施加的重力加速度（只是地球重力，手动晃的再厉害也不管用）
+            //CMAcceleration gravity = motion.gravity;
+            
+            //该属性只是用户手动为设备提供的加速度，不包含地球重力加速度
+            CMAcceleration userAcceleration = motion.userAcceleration;
+            NSLog(@"%f, %f, %f", userAcceleration.x, userAcceleration.y, userAcceleration.z);
+            
+            //值越大说明摇动的幅度越大
+            double num = 1.0f;
+            if (fabs(userAcceleration.x) > num || fabs(userAcceleration.y) > num ||fabs(userAcceleration.z) > num) {
+                //停止更新
+                [self stopMotion];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    handler();
+                });
+            }
+        }];
+    }
 }
 
 
 #pragma mark - 停止更新频率
-- (void)stopAccelerometerUpdates
-{
-    [self.motionManager stopAccelerometerUpdates];
+
+- (void)stopMotion {
+    [self.motionManager stopDeviceMotionUpdates];
 }
 
 
